@@ -1,18 +1,19 @@
+#! /usr/env/bin python3
 import string
 import os
-import shutil
-import subprocess
+from shutil import copy
+from subprocess import Popen, PIPE
 import base64
 import itertools
 import random
 
 
 def start(executable_file):
-    return subprocess.Popen(
+    return Popen(
         executable_file,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=PIPE
     )
 
 
@@ -50,39 +51,32 @@ def compare_last_block(a):
     return (sa[0] == sb[0], sa[1] == sb[1], sa[2] == sb[2], sa[3] == sb[3])
 
 
+def main():
+    target = 'Ww6b6IRPm28BAnwpymvaqMgBGmm0YBppNtVO7jrayur/Wq/e'
+
+
+if __name__ == "__main__":
+    main()
+
 n = 32
 
-target = '010110110000111010011011111010001000010001001111100110110110111100000001000000100111110000101001110010100110101111011010101010001100100000000001000110100110100110110100011000000001101001101001001101101101010101001110111011100011101011011010110010101110101011111111010110101010111111011110'
+target = 'Ww6b6IRPm28BAnwpymvaqMgBGmm0YBppNtVO7jrayur/Wq/e'
 target_split = [target[i:i+n] for i in range(0, len(target), n)]
 
 base = 'cya'
 init = '0000'
 
-shutil.copy(base, init)
+copy(base, init)
 
 ans = 'hacktoday{_hets_'
 output = ''
 current_name = ''
 last_name = init
 
-pp = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_{}'
-pp = string.printable.replace('/', '')
-# pv = 'aiueoAIUEO'
-# pk =
-
-# blocks = []
-# for i in itertools.product(pp, repeat=4):
-#     blocks.append(''.join(i))
-#     # print(i)
-# random.shuffle(blocks)
-
-a = '5emuEMU-'
-b = 'pqrstuvw'
-c = '3cksCkS'
-d = 'XYZ_'
+possible_character = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-{}'
 
 # for block in itertools.product('0', '0', '0', pp):
-for block in itertools.product(a, b, c, d):
+for block in itertools.product(a, repeat=4):
     block = ''.join(block)
     current_name = ans + block
     os.rename(last_name, current_name)
